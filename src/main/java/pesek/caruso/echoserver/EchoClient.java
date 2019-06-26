@@ -22,16 +22,29 @@ public class EchoClient {
 		String clientString = "";
 
 		boolean cont = true;
-		while (cont = true) {
+		while (cont == true) {
 			try {
 				clientString = getClientInput();
 				socket.getOutputStream().write(String.format("%50s", clientString).getBytes());
+				System.out.println(getServerResponse(socket));
 				cont = getClientCont();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
+	}
+
+	private static String getServerResponse(Socket socket) {
+		byte[] messageBuffer = new byte[50];
+		String message = "";
+		try {
+			socket.getInputStream().read(messageBuffer);
+			message = new String(messageBuffer).trim();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return message;
 	}
 
 	private static boolean getClientCont() throws IOException {
