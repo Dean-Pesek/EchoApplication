@@ -20,19 +20,16 @@ public class EchoClient {
 
 		socket = createSocket(host, portString);
 		String clientString = "";
-
-		boolean cont = true;
-		while (cont == true) {
+		
+		while (true) {
 			try {
 				clientString = getClientInput();
 				socket.getOutputStream().write(String.format("%50s", clientString).getBytes());
 				System.out.println("Server said: " + getServerResponse(socket));
-				cont = getClientCont();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	private static String getServerResponse(Socket socket) {
@@ -45,15 +42,6 @@ public class EchoClient {
 			e.printStackTrace();
 		}
 		return message;
-	}
-
-	private static boolean getClientCont() throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Would you like to go again? (y/n)");
-		String clientCont = reader.readLine();
-		if (clientCont == "y" || clientCont == "Y")
-			return true;
-		return false;
 	}
 
 	private static String getClientInput() throws IOException {
