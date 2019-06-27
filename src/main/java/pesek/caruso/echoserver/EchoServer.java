@@ -18,21 +18,24 @@ public class EchoServer {
 	}
 
 	private static void sendClientEcho(String clientMessage, Socket socket) {
-		try {
-			socket.getOutputStream().write(clientMessage.getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!clientMessage.isEmpty() || clientMessage != null) {
+			try {
+				socket.getOutputStream().write(clientMessage.getBytes());
+				System.out.println("Sending to client: " + clientMessage);
+			} catch (IOException e) {
+			}
 		}
 	}
 
 	private static String getClientInput(Socket socket) {
 		byte[] messageBuffer = new byte[50];
-		String message = "";
+		String message = null;
 		try {
 			socket.getInputStream().read(messageBuffer);
 			message = new String(messageBuffer).trim();
+			System.out.println("Received from client: " + message);
 		} catch (IOException e) {
-			e.printStackTrace();
+
 		}
 		return message;
 	}

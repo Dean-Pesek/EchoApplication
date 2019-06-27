@@ -26,7 +26,7 @@ public class EchoClient {
 			try {
 				clientString = getClientInput();
 				socket.getOutputStream().write(String.format("%50s", clientString).getBytes());
-				System.out.println(getServerResponse(socket));
+				System.out.println("Server said: " + getServerResponse(socket));
 				cont = getClientCont();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -60,6 +60,7 @@ public class EchoClient {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("What do you want to tell the server?: ");
 		String clientInput = reader.readLine();
+		System.out.println("Client said: " + clientInput);
 		return clientInput;
 	}
 
